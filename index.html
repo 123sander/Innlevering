@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kjeks Klikkespill - Utvidet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .game-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .shop-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+            max-height: 800px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .money-display {
+            font-size: 32px;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 30px;
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .money-display small {
+            display: block;
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .cookie-btn {
+            width: 150px;
+            height: 150px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #ffb347, #ff8c00);
+            font-size: 80px;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+            box-shadow: 0 8px 15px rgba(255, 140, 0, 0.4);
+        }
+
+        .cookie-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .cookie-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 4px 8px rgba(255, 140, 0, 0.4);
+        }
+
+        .income-info {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .income-info strong {
+            color: #667eea;
+            font-size: 18px;
+        }
+
+        .shop-item {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: left;
+            transition: all 0.3s;
+        }
+
+        .shop-item:hover {
+            border-color: #667eea;
+            background: #f5f5ff;
+        }
+
+        .shop-item.locked {
+            opacity: 0.6;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .item-name {
+            font-weight: bold;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .item-price {
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .item-description {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .item-count {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+
+        .buy-btn {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 6px;
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .buy-btn:hover:not(:disabled) {
+            background: #764ba2;
+        }
+
+        .buy-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .reset-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        .reset-btn:hover {
+            background: #ee5a52;
+        }
+
+        .floating-text {
+            position: fixed;
+            pointer-events: none;
+            font-weight: bold;
+            color: #667eea;
+            animation: float-up 1s ease-out forwards;
+            z-index: 1000;
+        }
+
+        @keyframes float-up {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-60px);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .cookie-btn {
+                width: 120px;
+                height: 120px;
+                font-size: 60px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .shop-section {
+                max-height: 600px;
+            }
+        }
+
+        .tab-buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            padding: 10px 5px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 13px;
+        }
+
+        .tab-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .category-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #667eea;
+            text-transform: uppercase;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 8px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: #f0f0f0;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Venstre side: Spill -->
+        <div class="game-section">
+            <h1>🍪 Kjeks Klikkespill</h1>
+            <div class="money-display">
+                <div id="money">0</div>
+                <small>Penger</small>
+            </div>
+            <button class="cookie-btn" id="cookieBtn">🍪</button>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-label">Per klikk</div>
+                    <div class="stat-value" id="perClick">1</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Per sekund</div>
+                    <div class="stat-value" id="perSecond">0</div>
+                </div>
+            </div>
+            <div class="income-info">
+                <div>Total kjeks kjøpt: <strong id="totalClicks">0</strong></div>
+                <div style="margin-top: 10px;">Oppgraderinger kjøpt: <strong id="totalUpgrades">0</strong></div>
+            </div>
+        </div>
+
+        <!-- Høyre side: Butikk -->
+        <div class="shop-section">
+            <h1>🛍️ Butikk</h1>
+            
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="switchTab('upgrades')">⚡ Kraft</button>
+                <button class="tab-btn" onclick="switchTab('workers')">🏭 Arbeidere</button>
+                <button class="tab-btn" onclick="switchTab('buildings')">🏢 Bygninger</button>
+                <button class="tab-btn" onclick="switchTab('special')">✨ Spesial</button>
+                <button class="tab-btn" onclick="switchTab('mega')">🚀 Mega</button>
+            </div>
+
+            <div id="upgrades" class="tab-content active"></div>
+            <div id="workers" class="tab-content"></div>
+            <div id="buildings" class="tab-content"></div>
+            <div id="special" class="tab-content"></div>
+            <div id="mega" class="tab-content"></div>
+
+            <button class="reset-btn" onclick="resetGame()">🔄 Nullstill Spill</button>
+        </div>
+    </div>
+
+    <script>
+        let money = 0;
+        let perClick = 1;
+        let perSecond = 0;
+        let totalClicks = 0;
+        let totalUpgrades = 0;
+
+        const upgrades = [
+            { id: 'upgrade1', name: 'Sterkere klikk', description: '+1 per klikk', price: 10, effect: 1, icon: '⚡' },
+            { id: 'upgrade2', name: 'Dobbelt klikk', description: '+2 per klikk', price: 50, effect: 2, icon: '⚡' },
+            { id: 'upgrade3', name: 'Klikk boost', description: '+5 per klikk', price: 200, effect: 5, icon: '🔥' },
+            { id: 'upgrade4', name: 'Mega boost', description: '+15 per klikk', price: 1000, effect: 15, icon: '💥' },
+            { id: 'upgrade5', name: 'Ekstrem kraft', description: '+50 per klikk', price: 5000, effect: 50, icon: '⭐' },
+            { id: 'upgrade6', name: 'Ultrakraft', description: '+150 per klikk', price: 25000, effect: 150, icon: '🌟' },
+        ];
+
+        const workers = [
+            { id: 'worker1', name: 'Bakeri', description: '1 kr per sekund', price: 15, income: 1, icon: '🏭' },
+            { id: 'worker2', name: 'Stor bakeri', description: '10 kr per sekund', price: 100, income: 10, icon: '🏢' },
+            { id: 'worker3', name: 'Mega fabrikk', description: '50 kr per sekund', price: 500, income: 50, icon: '🌆' },
+            { id: 'worker4', name: 'Kjempe fabrikk', description: '250 kr per sekund', price: 3000, income: 250, icon: '🏗️' },
+            { id: 'worker5', name: 'Galaktisk fabrikk', description: '1000 kr per sekund', price: 15000, income: 1000, icon: '🛸' },
+        ];
+
+        const buildings = [
+            { id: 'building1', name: 'Kjeksfabrikk', description: '100 kr per sekund', price: 2000, income: 100, icon: '🏭' },
+            { id: 'building2', name: 'Kjeks-forretning', description: '500 kr per sekund', price: 10000, income: 500, icon: '🏪' },
+            { id: 'building3', name: 'Kjeks-konsern', description: '2500 kr per sekund', price: 50000, income: 2500, icon: '🏢' },
+            { id: 'building4', name: 'Kjeks-imperium', description: '10000 kr per sekund', price: 250000, income: 10000, icon: '👑' },
+            { id: 'building5', name: 'Kjeks-univers', description: '50000 kr per sekund', price: 1000000, income: 50000, icon: '🌌' },
+        ];
+
+        const special = [
+            { id: 'special1', name: 'Gullkjeks', description: '+10 per klikk', price: 3000, effect: 10, icon: '🟡' },
+            { id: 'special2', name: 'Diamantkjeks', description: '+50 per klikk', price: 15000, effect: 50, icon: '💎' },
+            { id: 'special3', name: 'Magisk kjeks', description: '+200 per klikk', price: 75000, effect: 200, icon: '✨' },
+            { id: 'special4', name: 'Quantum kjeks', description: '+1000 per klikk', price: 400000, effect: 1000, icon: '⚛️' },
+        ];
+
+        const mega = [
+            { id: 'mega1', name: 'Kjeks Singularitet', description: '+5000 per klikk', price: 1000000, effect: 5000, income: 10000, icon: '🌑' },
+            { id: 'mega2', name: 'Kjeks Big Bang', description: '+50000 per klikk + 100k/s', price: 10000000, effect: 50000, income: 100000, icon: '💫' },
+            { id: 'mega3', name: 'Kjeks Multivers', description: '+500k per klikk + 1M/s', price: 100000000, effect: 500000, income: 1000000, icon: '🌐' },
+        ];
+
+        const bought = {};
+
+        function updateDisplay() {
+            document.getElementById('money').textContent = formatNumber(Math.floor(money));
+            document.getElementById('perClick').textContent = formatNumber(perClick);
+            document.getElementById('perSecond').textContent = formatNumber(perSecond);
+            document.getElementById('totalClicks').textContent = formatNumber(totalClicks);
+            document.getElementById('totalUpgrades').textContent = formatNumber(totalUpgrades);
+            renderShop();
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toString();
+        }
+
+        function clickCookie(e) {
+            money += perClick;
+            totalClicks += perClick;
+            createFloatingText(e, '+' + formatNumber(perClick) + ' kr');
+            updateDisplay();
+        }
+
+        function createFloatingText(e, text) {
+            const floatingText = document.createElement('div');
+            floatingText.className = 'floating-text';
+            floatingText.textContent = text;
+            floatingText.style.left = e.clientX + 'px';
+            floatingText.style.top = e.clientY + 'px';
+            document.body.appendChild(floatingText);
+            setTimeout(() => floatingText.remove(), 1000);
+        }
+
+        function buyItem(itemId, price, effect, income = 0) {
+            if (money >= price) {
+                money -= price;
+                if (effect) perClick += effect;
+                if (income) perSecond += income;
+                bought[itemId] = (bought[itemId] || 0) + 1;
+                totalUpgrades++;
+                updateDisplay();
+            }
+        }
+
+        function renderShop() {
+            // Oppgraderinger
+            const upgradesHtml = upgrades.map(item => `
+                <div class="shop-item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-name">${item.icon} ${item.name}</div>
+                            <div class="item-description">${item.description}</div>
+                        </div>
+                        <div class="item-price">${formatNumber(item.price)} kr</div>
+                    </div>
+                    <button class="buy-btn" onclick="buyItem('${item.id}', ${item.price}, ${item.effect})" ${money < item.price ? 'disabled' : ''}>
+                        Kjøp
+                    </button>
+                </div>
+            `).join('');
+
+            // Arbeidere
+            const workersHtml = workers.map(item => `
+                <div class="shop-item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-name">${item.icon} ${item.name}</div>
+                            <div class="item-description">${item.description}</div>
+                        </div>
+                        <div class="item-price">${formatNumber(item.price)} kr</div>
+                    </div>
+                    <div class="item-count">Antall: <strong>${bought[item.id] || 0}</strong></div>
+                    <button class="buy-btn" onclick="buyItem('${item.id}', ${item.price}, 0, ${item.income})" ${money < item.price ? 'disabled' : ''}>
+                        Kjøp
+                    </button>
+                </div>
+            `).join('');
+
+            // Bygninger
+            const buildingsHtml = buildings.map(item => `
+                <div class="shop-item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-name">${item.icon} ${item.name}</div>
+                            <div class="item-description">${item.description}</div>
+                        </div>
+                        <div class="item-price">${formatNumber(item.price)} kr</div>
+                    </div>
+                    <div class="item-count">Antall: <strong>${bought[item.id] || 0}</strong></div>
+                    <button class="buy-btn" onclick="buyItem('${item.id}', ${item.price}, 0, ${item.income})" ${money < item.price ? 'disabled' : ''}>
+                        Kjøp
+                    </button>
+                </div>
+            `).join('');
+
+            // Spesial
+            const specialHtml = special.map(item => `
+                <div class="shop-item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-name">${item.icon} ${item.name}</div>
+                            <div class="item-description">${item.description}</div>
+                        </div>
+                        <div class="item-price">${formatNumber(item.price)} kr</div>
+                    </div>
+                    <button class="buy-btn" onclick="buyItem('${item.id}', ${item.price}, ${item.effect})" ${money < item.price ? 'disabled' : ''}>
+                        Kjøp
+                    </button>
+                </div>
+            `).join('');
+
+            // Mega
+            const megaHtml = mega.map(item => `
+                <div class="shop-item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-name">${item.icon} ${item.name}</div>
+                            <div class="item-description">${item.description}</div>
+                        </div>
+                        <div class="item-price">${formatNumber(item.price)} kr</div>
+                    </div>
+                    <button class="buy-btn" onclick="buyItem('${item.id}', ${item.price}, ${item.effect}, ${item.income})" ${money < item.price ? 'disabled' : ''}>
+                        Kjøp
+                    </button>
+                </div>
+            `).join('');
+
+            document.getElementById('upgrades').innerHTML = upgradesHtml;
+            document.getElementById('workers').innerHTML = workersHtml;
+            document.getElementById('buildings').innerHTML = buildingsHtml;
+            document.getElementById('special').innerHTML = specialHtml;
+            document.getElementById('mega').innerHTML = megaHtml;
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+            document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
+        }
+
+        function resetGame() {
+            if (confirm('Er du sikker på at du vil nullstille spillet?\n\nAlt progresjon vil bli tapt!')) {
+                money = 0;
+                perClick = 1;
+                perSecond = 0;
+                totalClicks = 0;
+                totalUpgrades = 0;
+                Object.keys(bought).forEach(key => delete bought[key]);
+                updateDisplay();
+            }
+        }
+
+        // Auto-income hvert sekund
+        setInterval(() => {
+            money += perSecond;
+            updateDisplay();
+        }, 1000);
+
+        // Event listeners
+        document.getElementById('cookieBtn').addEventListener('click', clickCookie);
+
+        // Initial render
+        updateDisplay();
+    </script>
+</body>
+</html>
