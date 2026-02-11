@@ -339,11 +339,11 @@
             <h1>🛍️ Butikk</h1>
             
             <div class="tab-buttons">
-                <button class="tab-btn active" onclick="gameState.switchTab('upgrades')">⚡ Kraft</button>
-                <button class="tab-btn" onclick="gameState.switchTab('workers')">🏭 Arbeidere</button>
-                <button class="tab-btn" onclick="gameState.switchTab('buildings')">🏢 Bygninger</button>
-                <button class="tab-btn" onclick="gameState.switchTab('special')">✨ Spesial</button>
-                <button class="tab-btn" onclick="gameState.switchTab('mega')">🚀 Mega</button>
+                <button class="tab-btn active" data-tab="upgrades">⚡ Kraft</button>
+                <button class="tab-btn" data-tab="workers">🏭 Arbeidere</button>
+                <button class="tab-btn" data-tab="buildings">🏢 Bygninger</button>
+                <button class="tab-btn" data-tab="special">✨ Spesial</button>
+                <button class="tab-btn" data-tab="mega">🚀 Mega</button>
             </div>
 
             <div id="upgrades" class="tab-content active"></div>
@@ -352,7 +352,7 @@
             <div id="special" class="tab-content"></div>
             <div id="mega" class="tab-content"></div>
 
-            <button class="reset-btn" onclick="gameState.resetGame()">🔄 Nullstill</button>
+            <button class="reset-btn" id="resetBtn">🔄 Nullstill</button>
         </div>
     </div>
 
@@ -447,11 +447,15 @@
                 setTimeout(() => floatingText.remove(), 1000);
             },
 
-            buyItem(itemId, price, effect, income = 0) {
+            buyItem(itemId, price, effect, income) {
                 if (this.money >= price) {
                     this.money -= price;
-                    if (effect) this.perClick += effect;
-                    if (income) this.perSecond += income;
+                    if (effect && effect > 0) {
+                        this.perClick += effect;
+                    }
+                    if (income && income > 0) {
+                        this.perSecond += income;
+                    }
                     this.bought[itemId] = (this.bought[itemId] || 0) + 1;
                     this.totalUpgrades++;
                     this.updateDisplay();
@@ -459,68 +463,33 @@
             },
 
             renderShop() {
-                const upgradesHtml = this.upgrades.map(item => `
-                    <div class="shop-item">
-                        <div class="item-header">
-                            <div>
-                                <div class="item-name">${item.icon} ${item.name}</div>
-                                <div class="item-description">${item.description}</div>
+                const createItemHtml = (item, hasIncome = false) => {
+                    const countHtml = hasIncome ? `<div class="item-count">Antall: <strong>${this.bought[item.id] || 0}</strong></div>` : '';
+                    const income = hasIncome ? item.income : 0;
+                    const effect = !hasIncome ? item.effect : 0;
+                    
+                    return `
+                        <div class="shop-item">
+                            <div class="item-header">
+                                <div>
+                                    <div class="item-name">${item.icon} ${item.name}</div>
+                                    <div class="item-description">${item.description}</div>
+                                </div>
+                                <div class="item-price">${this.formatNumber(item.price)} kr</div>
                             </div>
-                            <div class="item-price">${this.formatNumber(item.price)} kr</div>
+                            ${countHtml}
+                            <button class="buy-btn" onclick="gameState.buyItem('${item.id}', ${item.price}, ${effect}, ${income})" ${this.money < item.price ? 'disabled' : ''}>
+                                Kjøp
+                            </button>
                         </div>
-                        <button class="buy-btn" onclick="gameState.buyItem('${item.id}', ${item.price}, ${item.effect})" ${this.money < item.price ? 'disabled' : ''}>
-                            Kjøp
-                        </button>
-                    </div>
-                `).join('');
+                    `;
+                };
 
-                const workersHtml = this.workers.map(item => `
-                    <div class="shop-item">
-                        <div class="item-header">
-                            <div>
-                                <div class="item-name">${item.icon} ${item.name}</div>
-                                <div class="item-description">${item.description}</div>
-                            </div>
-                            <div class="item-price">${this.formatNumber(item.price)} kr</div>
-                        </div>
-                        <div class="item-count">Antall: <strong>${this.bought[item.id] || 0}</strong></div>
-                        <button class="buy-btn" onclick="gameState.buyItem('${item.id}', ${item.price}, 0, ${item.income})" ${this.money < item.price ? 'disabled' : ''}>
-                            Kjøp
-                        </button>
-                    </div>
-                `).join('');
-
-                const buildingsHtml = this.buildings.map(item => `
-                    <div class="shop-item">
-                        <div class="item-header">
-                            <div>
-                                <div class="item-name">${item.icon} ${item.name}</div>
-                                <div class="item-description">${item.description}</div>
-                            </div>
-                            <div class="item-price">${this.formatNumber(item.price)} kr</div>
-                        </div>
-                        <div class="item-count">Antall: <strong>${this.bought[item.id] || 0}</strong></div>
-                        <button class="buy-btn" onclick="gameState.buyItem('${item.id}', ${item.price}, 0, ${item.income})" ${this.money < item.price ? 'disabled' : ''}>
-                            Kjøp
-                        </button>
-                    </div>
-                `).join('');
-
-                const specialHtml = this.special.map(item => `
-                    <div class="shop-item">
-                        <div class="item-header">
-                            <div>
-                                <div class="item-name">${item.icon} ${item.name}</div>
-                                <div class="item-description">${item.description}</div>
-                            </div>
-                            <div class="item-price">${this.formatNumber(item.price)} kr</div>
-                        </div>
-                        <button class="buy-btn" onclick="gameState.buyItem('${item.id}', ${item.price}, ${item.effect})" ${this.money < item.price ? 'disabled' : ''}>
-                            Kjøp
-                        </button>
-                    </div>
-                `).join('');
-
+                const upgradesHtml = this.upgrades.map(item => createItemHtml(item)).join('');
+                const workersHtml = this.workers.map(item => createItemHtml(item, true)).join('');
+                const buildingsHtml = this.buildings.map(item => createItemHtml(item, true)).join('');
+                const specialHtml = this.special.map(item => createItemHtml(item)).join('');
+                
                 const megaHtml = this.mega.map(item => `
                     <div class="shop-item">
                         <div class="item-header">
@@ -543,11 +512,11 @@
                 document.getElementById('mega').innerHTML = megaHtml;
             },
 
-            switchTab(tab) {
+            switchTab(tabName) {
                 document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
                 document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-                document.getElementById(tab).classList.add('active');
-                document.querySelector(`[onclick="gameState.switchTab('${tab}')"]`).classList.add('active');
+                document.getElementById(tabName).classList.add('active');
+                document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
             },
 
             resetGame() {
@@ -563,15 +532,19 @@
             }
         };
 
-        // Auto-income
-        setInterval(() => {
-            gameState.money += gameState.perSecond;
-            gameState.updateDisplay();
-        }, 1000);
-
-        // Event listener
+        // Event listeners
         document.getElementById('cookieBtn').addEventListener('click', (e) => {
             gameState.clickCookie(e);
+        });
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                gameState.switchTab(btn.dataset.tab);
+            });
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            gameState.resetGame();
         });
 
         // Forhindrer zoom ved dobbelklikk
@@ -581,6 +554,13 @@
             }
         }, { passive: false });
 
+        // Auto-income
+        setInterval(() => {
+            gameState.money += gameState.perSecond;
+            gameState.updateDisplay();
+        }, 1000);
+
+        // Initial render
         gameState.updateDisplay();
     </script>
 </body>
