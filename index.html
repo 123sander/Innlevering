@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1">
-    <title>Kjeks Klikkespill - Utvidet</title>
+    <title>Kjeks Klikkespill</title>
     <style>
         * {
             margin: 0;
@@ -11,157 +11,131 @@
             box-sizing: border-box;
             user-select: none;
             -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
         }
 
         html, body {
             width: 100%;
             height: 100%;
             touch-action: manipulation;
-            -webkit-touch-callout: none;
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            overflow-x: hidden;
         }
 
         body {
             display: flex;
             flex-direction: column;
-            padding: 0;
         }
 
-        /* HEADER MED PENGER */
-        .header-section {
+        .header {
             background: white;
-            padding: 25px 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            padding: 20px;
             text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        .header-section h1 {
+        .header h1 {
             color: #333;
-            font-size: 28px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            font-size: 24px;
         }
 
-        .money-display-large {
-            font-size: 48px;
+        .money {
+            font-size: 40px;
             color: #667eea;
             font-weight: bold;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
-            padding: 20px;
-            border-radius: 12px;
+            margin-bottom: 10px;
         }
 
-        .stats-large {
+        .stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 10px;
         }
 
-        .stat-box-large {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
+        .stat {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
         }
 
-        .stat-label-large {
-            font-size: 12px;
+        .stat-label {
+            font-size: 10px;
+            color: #999;
             text-transform: uppercase;
-            opacity: 0.9;
-            margin-bottom: 5px;
         }
 
-        .stat-value-large {
-            font-size: 22px;
+        .stat-value {
+            font-size: 18px;
+            color: #667eea;
             font-weight: bold;
         }
 
-        /* MAIN CONTENT */
-        .main-content {
+        .container {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 30px 20px 20px;
+            padding: 20px;
             overflow-y: auto;
         }
 
         .cookie-btn {
-            width: 200px;
-            height: 200px;
+            width: 180px;
+            height: 180px;
             border: none;
             border-radius: 50%;
             background: linear-gradient(145deg, #ffb347, #ff8c00);
-            font-size: 120px;
+            font-size: 100px;
             cursor: pointer;
-            transition: transform 0.1s, box-shadow 0.1s;
-            box-shadow: 0 10px 30px rgba(255, 140, 0, 0.6);
-            touch-action: manipulation;
-            margin-bottom: 30px;
-            display: block;
+            box-shadow: 0 8px 20px rgba(255,140,0,0.6);
+            margin: 20px 0;
+            transition: transform 0.05s;
         }
 
         .cookie-btn:active {
-            transform: scale(0.88);
-            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4);
+            transform: scale(0.9);
         }
 
-        .cookie-btn:hover {
-            transform: scale(1.05);
-        }
-
-        .cookie-info {
-            text-align: center;
+        .info {
             color: white;
-            margin-bottom: 40px;
-            font-size: 16px;
+            text-align: center;
+            margin-bottom: 30px;
             font-weight: bold;
         }
 
-        .info-item {
-            margin: 8px 0;
-        }
-
-        .shop-section {
+        .shop {
             background: white;
-            border-radius: 15px;
-            padding: 30px 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
             width: 100%;
-            max-width: 600px;
-            margin-bottom: 30px;
+            max-width: 500px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
         }
 
-        h2 {
+        .shop h2 {
             color: #333;
-            margin-bottom: 20px;
-            font-size: 22px;
+            margin-bottom: 15px;
+            font-size: 20px;
             text-align: center;
         }
 
-        .tab-buttons {
+        .tabs {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .tab-btn {
-            padding: 12px 5px;
+            padding: 10px;
             border: 2px solid #667eea;
             background: white;
             color: #667eea;
-            border-radius: 6px;
+            border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
-            transition: all 0.3s;
-            font-size: 14px;
-            touch-action: manipulation;
+            font-size: 12px;
         }
 
         .tab-btn.active {
@@ -169,13 +143,9 @@
             color: white;
         }
 
-        .tab-btn:active {
-            transform: scale(0.95);
-        }
-
         .tab-content {
             display: none;
-            max-height: 350px;
+            max-height: 300px;
             overflow-y: auto;
         }
 
@@ -183,19 +153,12 @@
             display: block;
         }
 
-        .shop-item {
+        .item {
             background: #f9f9f9;
             border: 2px solid #e0e0e0;
-            border-radius: 10px;
+            border-radius: 8px;
             padding: 12px;
-            margin-bottom: 12px;
-            text-align: left;
-            transition: all 0.3s;
-        }
-
-        .shop-item:active {
-            border-color: #667eea;
-            background: #f5f5ff;
+            margin-bottom: 10px;
         }
 
         .item-header {
@@ -208,48 +171,44 @@
         .item-name {
             font-weight: bold;
             color: #333;
-            font-size: 15px;
+            font-size: 14px;
         }
 
         .item-price {
             background: #667eea;
             color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
             font-weight: bold;
-            white-space: nowrap;
         }
 
-        .item-description {
+        .item-desc {
             font-size: 11px;
             color: #666;
             margin-bottom: 8px;
         }
 
         .item-count {
-            font-size: 12px;
+            font-size: 11px;
             color: #999;
             margin-bottom: 8px;
         }
 
         .buy-btn {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             border: none;
-            border-radius: 6px;
+            border-radius: 5px;
             background: #667eea;
             color: white;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s;
-            touch-action: manipulation;
-            font-size: 14px;
+            transition: background 0.2s;
         }
 
         .buy-btn:active:not(:disabled) {
             background: #764ba2;
-            transform: scale(0.97);
         }
 
         .buy-btn:disabled {
@@ -258,339 +217,230 @@
         }
 
         .reset-btn {
-            margin-top: 15px;
-            padding: 12px;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
             background: #ff6b6b;
             color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
             font-weight: bold;
-            transition: background 0.3s;
-            width: 100%;
-            touch-action: manipulation;
-            font-size: 14px;
+            cursor: pointer;
         }
 
-        .reset-btn:active {
-            background: #ee5a52;
-            transform: scale(0.97);
-        }
-
-        .floating-text {
+        .floating {
             position: fixed;
             pointer-events: none;
             font-weight: bold;
-            color: #fff;
-            text-shadow: 0 0 5px #667eea;
-            font-size: 32px;
-            animation: float-up 1s ease-out forwards;
-            z-index: 1000;
+            color: white;
+            text-shadow: 0 0 3px #667eea;
+            font-size: 28px;
+            animation: rise 1s ease-out forwards;
+            z-index: 999;
         }
 
-        @keyframes float-up {
-            0% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-100px);
-            }
-        }
-
-        .tab-content::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .tab-content::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        .tab-content::-webkit-scrollbar-thumb {
-            background: #667eea;
-            border-radius: 10px;
-        }
-
-        .tab-content::-webkit-scrollbar-thumb:hover {
-            background: #764ba2;
-        }
-
-        .main-content::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .main-content::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .main-content::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 10px;
+        @keyframes rise {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-80px); }
         }
     </style>
 </head>
 <body>
-    <!-- HEADER MED STORT PENGEOVERSIKT -->
-    <div class="header-section">
+    <div class="header">
         <h1>🍪 Kjeks Klikkespill</h1>
-        <div class="money-display-large" id="moneyLarge">0</div>
-        <div class="stats-large">
-            <div class="stat-box-large">
-                <div class="stat-label-large">Per klikk</div>
-                <div class="stat-value-large" id="perClickLarge">1</div>
+        <div class="money" id="money">0</div>
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-label">Per klikk</div>
+                <div class="stat-value" id="perClick">1</div>
             </div>
-            <div class="stat-box-large">
-                <div class="stat-label-large">Per sekund</div>
-                <div class="stat-value-large" id="perSecondLarge">0</div>
+            <div class="stat">
+                <div class="stat-label">Per sekund</div>
+                <div class="stat-value" id="perSecond">0</div>
             </div>
         </div>
     </div>
 
-    <!-- MAIN CONTENT - SCROLLBAR -->
-    <div class="main-content">
-        <button class="cookie-btn" id="cookieBtn">🍪</button>
-        
-        <div class="cookie-info">
-            <div class="info-item">Total kjøpt: <span id="totalClicks">0</span></div>
-            <div class="info-item">Oppgraderinger: <span id="totalUpgrades">0</span></div>
+    <div class="container">
+        <button class="cookie-btn" id="btn"></button>
+
+        <div class="info">
+            <div>Total: <span id="total">0</span></div>
+            <div>Kjøpt: <span id="kjopt">0</span></div>
         </div>
 
-        <!-- BUTIKK -->
-        <div class="shop-section">
+        <div class="shop">
             <h2>🛍️ Butikk</h2>
             
-            <div class="tab-buttons">
-                <button class="tab-btn active" data-tab="upgrades">⚡</button>
-                <button class="tab-btn" data-tab="workers">🏭</button>
-                <button class="tab-btn" data-tab="buildings">🏢</button>
-                <button class="tab-btn" data-tab="special">✨</button>
-                <button class="tab-btn" data-tab="mega">🚀</button>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="tab(0)">⚡</button>
+                <button class="tab-btn" onclick="tab(1)">🏭</button>
+                <button class="tab-btn" onclick="tab(2)">🏢</button>
+                <button class="tab-btn" onclick="tab(3)">✨</button>
+                <button class="tab-btn" onclick="tab(4)">🚀</button>
             </div>
 
-            <div id="upgrades" class="tab-content active"></div>
-            <div id="workers" class="tab-content"></div>
-            <div id="buildings" class="tab-content"></div>
-            <div id="special" class="tab-content"></div>
-            <div id="mega" class="tab-content"></div>
+            <div id="tab0" class="tab-content active"></div>
+            <div id="tab1" class="tab-content"></div>
+            <div id="tab2" class="tab-content"></div>
+            <div id="tab3" class="tab-content"></div>
+            <div id="tab4" class="tab-content"></div>
 
-            <button class="reset-btn" id="resetBtn">🔄 Nullstill</button>
+            <button class="reset-btn" onclick="reset()">🔄 Nullstill</button>
         </div>
     </div>
 
     <script>
-        const gameState = {
+        let game = {
             money: 0,
             perClick: 1,
             perSecond: 0,
             totalClicks: 0,
-            totalUpgrades: 0,
-            bought: {},
-
-            upgrades: [
-                { id: 'upgrade1', name: 'Sterkere klikk', description: '+1 per klikk', price: 10, effect: 1, icon: '⚡' },
-                { id: 'upgrade2', name: 'Dobbelt klikk', description: '+2 per klikk', price: 250, effect: 2, icon: '⚡' },
-                { id: 'upgrade3', name: 'Klikk boost', description: '+5 per klikk', price: 1500, effect: 5, icon: '🔥' },
-                { id: 'upgrade4', name: 'Mega boost', description: '+15 per klikk', price: 10000, effect: 15, icon: '💥' },
-                { id: 'upgrade5', name: 'Ekstrem kraft', description: '+50 per klikk', price: 75000, effect: 50, icon: '⭐' },
-                { id: 'upgrade6', name: 'Ultrakraft', description: '+150 per klikk', price: 500000, effect: 150, icon: '🌟' },
-                { id: 'upgrade7', name: 'Galaktisk kraft', description: '+500 per klikk', price: 3000000, effect: 500, icon: '🌠' },
-                { id: 'upgrade8', name: 'Univers kraft', description: '+2000 per klikk', price: 20000000, effect: 2000, icon: '🔮' },
-            ],
-
-            workers: [
-                { id: 'worker1', name: 'Bakeri', description: '1 kr/s', price: 100, income: 1, icon: '🏭' },
-                { id: 'worker2', name: 'Stor bakeri', description: '10 kr/s', price: 800, income: 10, icon: '🏢' },
-                { id: 'worker3', name: 'Mega fabrikk', description: '50 kr/s', price: 5000, income: 50, icon: '🌆' },
-                { id: 'worker4', name: 'Kjempe fabrikk', description: '+250 kr/s', price: 40000, income: 250, icon: '🏗️' },
-                { id: 'worker5', name: 'Galaktisk fabrikk', description: '+1000 kr/s', price: 300000, income: 1000, icon: '🛸' },
-                { id: 'worker6', name: 'Multivers fabrikk', description: '+5000 kr/s', price: 2000000, income: 5000, icon: '🌀' },
-                { id: 'worker7', name: 'Infinity fabrikk', description: '+25000 kr/s', price: 15000000, income: 25000, icon: '∞' },
-            ],
-
-            buildings: [
-                { id: 'building1', name: 'Kjeksfabrikk', description: '10 kr/s', price: 50000, income: 10, icon: '🏭' },
-                { id: 'building2', name: 'Kjeks-forretning', description: '100 kr/s', price: 400000, income: 100, icon: '🏪' },
-                { id: 'building3', name: 'Kjeks-konsern', description: '+500 kr/s', price: 3000000, income: 500, icon: '🏢' },
-                { id: 'building4', name: 'Kjeks-imperium', description: '+5000 kr/s', price: 20000000, income: 5000, icon: '👑' },
-                { id: 'building5', name: 'Kjeks-univers', description: '+25000 kr/s', price: 150000000, income: 25000, icon: '🌌' },
-                { id: 'building6', name: 'Kjeks-multiversum', description: '+100000 kr/s', price: 1000000000, income: 100000, icon: '🌠' },
-            ],
-
-            special: [
-                { id: 'special1', name: 'Gullkjeks', description: '+10 per klikk', price: 100000, effect: 10, icon: '🟡' },
-                { id: 'special2', name: 'Diamantkjeks', description: '+50 per klikk', price: 750000, effect: 50, icon: '💎' },
-                { id: 'special3', name: 'Magisk kjeks', description: '+300 per klikk', price: 5000000, effect: 300, icon: '✨' },
-                { id: 'special4', name: 'Quantum kjeks', description: '+2000 per klikk', price: 50000000, effect: 2000, icon: '⚛️' },
-                { id: 'special5', name: 'Cosmic kjeks', description: '+15000 per klikk', price: 500000000, effect: 15000, icon: '🌟' },
-            ],
-
-            mega: [
-                { id: 'mega1', name: 'Kjeks Singularitet', description: '+50000 per klikk + 10k/s', price: 500000000, effect: 50000, income: 10000, icon: '🌑' },
-                { id: 'mega2', name: 'Kjeks Big Bang', description: '+500000 + 100k/s', price: 5000000000, effect: 500000, income: 100000, icon: '💫' },
-                { id: 'mega3', name: 'Kjeks Multivers', description: '+5M + 1M/s', price: 50000000000, effect: 5000000, income: 1000000, icon: '🌐' },
-                { id: 'mega4', name: 'Kjeks Eternity', description: '+50M + 10M/s', price: 500000000000, effect: 50000000, income: 10000000, icon: '♾️' },
-            ],
-
-            formatNumber(num) {
-                if (num >= 1000000000) {
-                    return (num / 1000000000).toFixed(1) + 'B';
-                } else if (num >= 1000000) {
-                    return (num / 1000000).toFixed(1) + 'M';
-                } else if (num >= 1000) {
-                    return (num / 1000).toFixed(1) + 'K';
-                }
-                return Math.floor(num).toString();
-            },
-
-            updateDisplay() {
-                document.getElementById('moneyLarge').textContent = this.formatNumber(this.money);
-                document.getElementById('perClickLarge').textContent = this.formatNumber(this.perClick);
-                document.getElementById('perSecondLarge').textContent = this.formatNumber(this.perSecond);
-                document.getElementById('totalClicks').textContent = this.formatNumber(this.totalClicks);
-                document.getElementById('totalUpgrades').textContent = this.formatNumber(this.totalUpgrades);
-                this.renderShop();
-            },
-
-            clickCookie(e) {
-                this.money += this.perClick;
-                this.totalClicks += this.perClick;
-                this.createFloatingText(e, '+' + this.formatNumber(this.perClick));
-                this.updateDisplay();
-            },
-
-            createFloatingText(e, text) {
-                const floatingText = document.createElement('div');
-                floatingText.className = 'floating-text';
-                floatingText.textContent = text;
-                const x = e.clientX || (e.touches && e.touches[0].clientX) || 0;
-                const y = e.clientY || (e.touches && e.touches[0].clientY) || 0;
-                floatingText.style.left = x + 'px';
-                floatingText.style.top = y + 'px';
-                document.body.appendChild(floatingText);
-                setTimeout(() => floatingText.remove(), 1000);
-            },
-
-            buyItem(itemId, price, effect, income) {
-                if (this.money >= price) {
-                    this.money -= price;
-                    if (effect && effect > 0) {
-                        this.perClick += effect;
-                    }
-                    if (income && income > 0) {
-                        this.perSecond += income;
-                    }
-                    this.bought[itemId] = (this.bought[itemId] || 0) + 1;
-                    this.totalUpgrades++;
-                    this.updateDisplay();
-                }
-            },
-
-            renderShop() {
-                const createItemHtml = (item, hasIncome = false) => {
-                    const countHtml = hasIncome ? `<div class="item-count">Antall: <strong>${this.bought[item.id] || 0}</strong></div>` : '';
-                    const income = hasIncome ? item.income : 0;
-                    const effect = !hasIncome ? item.effect : 0;
-                    
-                    return `
-                        <div class="shop-item">
-                            <div class="item-header">
-                                <div>
-                                    <div class="item-name">${item.icon} ${item.name}</div>
-                                    <div class="item-description">${item.description}</div>
-                                </div>
-                                <div class="item-price">${this.formatNumber(item.price)}</div>
-                            </div>
-                            ${countHtml}
-                            <button class="buy-btn" onclick="gameState.buyItem('${item.id}', ${item.price}, ${effect}, ${income})" ${this.money < item.price ? 'disabled' : ''}>
-                                Kjøp
-                            </button>
-                        </div>
-                    `;
-                };
-
-                const upgradesHtml = this.upgrades.map(item => createItemHtml(item)).join('');
-                const workersHtml = this.workers.map(item => createItemHtml(item, true)).join('');
-                const buildingsHtml = this.buildings.map(item => createItemHtml(item, true)).join('');
-                const specialHtml = this.special.map(item => createItemHtml(item)).join('');
-                
-                const megaHtml = this.mega.map(item => `
-                    <div class="shop-item">
-                        <div class="item-header">
-                            <div>
-                                <div class="item-name">${item.icon} ${item.name}</div>
-                                <div class="item-description">${item.description}</div>
-                            </div>
-                            <div class="item-price">${this.formatNumber(item.price)}</div>
-                        </div>
-                        <button class="buy-btn" onclick="gameState.buyItem('${item.id}', ${item.price}, ${item.effect}, ${item.income})" ${this.money < item.price ? 'disabled' : ''}>
-                            Kjøp
-                        </button>
-                    </div>
-                `).join('');
-
-                document.getElementById('upgrades').innerHTML = upgradesHtml;
-                document.getElementById('workers').innerHTML = workersHtml;
-                document.getElementById('buildings').innerHTML = buildingsHtml;
-                document.getElementById('special').innerHTML = specialHtml;
-                document.getElementById('mega').innerHTML = megaHtml;
-            },
-
-            switchTab(tabName) {
-                document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-                document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-                document.getElementById(tabName).classList.add('active');
-                document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
-            },
-
-            resetGame() {
-                if (confirm('Er du sikker?')) {
-                    this.money = 0;
-                    this.perClick = 1;
-                    this.perSecond = 0;
-                    this.totalClicks = 0;
-                    this.totalUpgrades = 0;
-                    this.bought = {};
-                    this.updateDisplay();
-                }
-            }
+            kjopt: 0,
+            items: {}
         };
 
-        // EVENT LISTENERS
-        document.getElementById('cookieBtn').addEventListener('click', function(e) {
-            gameState.clickCookie(e);
+        const upgrades = [
+            { id: 'u1', name: 'Styrke', desc: '+1 klikk', price: 10, effect: 1, icon: '⚡' },
+            { id: 'u2', name: 'Mega styrke', desc: '+5 klikk', price: 100, effect: 5, icon: '⚡' },
+            { id: 'u3', name: 'Ultra styrke', desc: '+20 klikk', price: 1000, effect: 20, icon: '🔥' },
+            { id: 'u4', name: 'Galaktisk styrke', desc: '+100 klikk', price: 10000, effect: 100, icon: '💥' },
+            { id: 'u5', name: 'Kosmisk styrke', desc: '+500 klikk', price: 100000, effect: 500, icon: '⭐' },
+            { id: 'u6', name: 'Uendelig styrke', desc: '+2000 klikk', price: 1000000, effect: 2000, icon: '🌟' },
+        ];
+
+        const workers = [
+            { id: 'w1', name: 'Bakeri', desc: '1 kr/s', price: 50, income: 1, icon: '🏭' },
+            { id: 'w2', name: 'Stor bakeri', desc: '10 kr/s', price: 400, income: 10, icon: '🏢' },
+            { id: 'w3', name: 'Mega fabrikk', desc: '100 kr/s', price: 3000, income: 100, icon: '🌆' },
+            { id: 'w4', name: 'Kjempe fabrikk', desc: '+1000 kr/s', price: 30000, income: 1000, icon: '🏗️' },
+            { id: 'w5', name: 'Galaktisk fabrikk', desc: '+10000 kr/s', price: 300000, income: 10000, icon: '🛸' },
+        ];
+
+        const buildings = [
+            { id: 'b1', name: 'Kjeksefabrikk', desc: '50 kr/s', price: 50000, income: 50, icon: '🏭' },
+            { id: 'b2', name: 'Kjeks-imperium', desc: '500 kr/s', price: 500000, income: 500, icon: '👑' },
+            { id: 'b3', name: 'Kjeks-univers', desc: '+5000 kr/s', price: 5000000, income: 5000, icon: '🌌' },
+            { id: 'b4', name: 'Kjeks-multiversum', desc: '+50000 kr/s', price: 50000000, income: 50000, icon: '🌠' },
+            { id: 'b5', name: 'Kjeks-singularitet', desc: '+500000 kr/s', price: 500000000, income: 500000, icon: '🌑' },
+        ];
+
+        const special = [
+            { id: 's1', name: 'Gullkjeks', desc: '+50 klikk', price: 50000, effect: 50, icon: '🟡' },
+            { id: 's2', name: 'Diamantkjeks', desc: '+200 klikk', price: 500000, effect: 200, icon: '💎' },
+            { id: 's3', name: 'Magisk kjeks', desc: '+1000 klikk', price: 5000000, effect: 1000, icon: '✨' },
+            { id: 's4', name: 'Quantum kjeks', desc: '+5000 klikk', price: 50000000, effect: 5000, icon: '⚛️' },
+            { id: 's5', name: 'Cosmic kjeks', desc: '+25000 klikk', price: 500000000, effect: 25000, icon: '🌟' },
+        ];
+
+        const mega = [
+            { id: 'm1', name: 'Kjeks Big Bang', desc: '+100000 klikk + 50k/s', price: 1000000000, effect: 100000, income: 50000, icon: '💫' },
+            { id: 'm2', name: 'Kjeks Multivers', desc: '+1M klikk + 500k/s', price: 10000000000, effect: 1000000, income: 500000, icon: '🌐' },
+            { id: 'm3', name: 'Kjeks Eternity', desc: '+10M klikk + 5M/s', price: 100000000000, effect: 10000000, income: 5000000, icon: '♾️' },
+        ];
+
+        const tabs = [upgrades, workers, buildings, special, mega];
+
+        document.getElementById('btn').textContent = '🍪';
+        document.getElementById('btn').addEventListener('click', function(e) {
+            click(e);
         });
 
-        document.getElementById('cookieBtn').addEventListener('touchstart', function(e) {
-            gameState.clickCookie(e);
-        });
+        function click(e) {
+            game.money += game.perClick;
+            game.totalClicks += game.perClick;
+            floating(e, '+' + game.perClick);
+            update();
+        }
 
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                gameState.switchTab(this.dataset.tab);
-            });
-        });
+        function floating(e, text) {
+            const el = document.createElement('div');
+            el.className = 'floating';
+            el.textContent = text;
+            el.style.left = e.clientX + 'px';
+            el.style.top = e.clientY + 'px';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 1000);
+        }
 
-        document.getElementById('resetBtn').addEventListener('click', function() {
-            gameState.resetGame();
-        });
+        function format(num) {
+            if (num >= 1000000000) return (num/1000000000).toFixed(1) + 'B';
+            if (num >= 1000000) return (num/1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num/1000).toFixed(1) + 'K';
+            return Math.floor(num).toString();
+        }
 
-        // Forhindrer zoom
-        document.addEventListener('touchend', function(e) {
-            if (e.target.closest('.cookie-btn')) {
-                e.preventDefault();
+        function buy(id) {
+            let item = null;
+            for (let tab of tabs) {
+                for (let i of tab) {
+                    if (i.id === id) {
+                        item = i;
+                        break;
+                    }
+                }
             }
-        }, { passive: false });
+            if (!item) return;
+            if (game.money < item.price) return;
 
-        // Auto-income
+            game.money -= item.price;
+            if (item.effect) game.perClick += item.effect;
+            if (item.income) game.perSecond += item.income;
+            game.items[id] = (game.items[id] || 0) + 1;
+            game.kjopt++;
+            update();
+        }
+
+        function tab(n) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab' + n).classList.add('active');
+            document.querySelectorAll('.tab-btn')[n].classList.add('active');
+        }
+
+        function reset() {
+            if (confirm('Nullstill?')) {
+                game = { money: 0, perClick: 1, perSecond: 0, totalClicks: 0, kjopt: 0, items: {} };
+                update();
+            }
+        }
+
+        function update() {
+            document.getElementById('money').textContent = format(game.money);
+            document.getElementById('perClick').textContent = format(game.perClick);
+            document.getElementById('perSecond').textContent = format(game.perSecond);
+            document.getElementById('total').textContent = format(game.totalClicks);
+            document.getElementById('kjopt').textContent = format(game.kjopt);
+
+            for (let t = 0; t < tabs.length; t++) {
+                let html = '';
+                for (let item of tabs[t]) {
+                    const canBuy = game.money >= item.price;
+                    const count = game.items[item.id] || 0;
+                    const countHtml = item.income ? `<div class="item-count">Antall: ${count}</div>` : '';
+                    html += `
+                        <div class="item">
+                            <div class="item-header">
+                                <div class="item-name">${item.icon} ${item.name}</div>
+                                <div class="item-price">${format(item.price)}</div>
+                            </div>
+                            <div class="item-desc">${item.desc}</div>
+                            ${countHtml}
+                            <button class="buy-btn" onclick="buy('${item.id}')" ${canBuy ? '' : 'disabled'}>Kjøp</button>
+                        </div>
+                    `;
+                }
+                document.getElementById('tab' + t).innerHTML = html;
+            }
+        }
+
+        // Auto inntekt
         setInterval(function() {
-            gameState.money += gameState.perSecond;
-            gameState.updateDisplay();
+            game.money += game.perSecond;
+            update();
         }, 1000);
 
-        // Start
-        gameState.updateDisplay();
+        update();
     </script>
 </body>
 </html>
