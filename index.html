@@ -28,106 +28,98 @@
 
         body {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .container {
-            display: flex;
             flex-direction: column;
-            width: 100%;
-            max-width: 600px;
-            gap: 20px;
+            padding: 0;
         }
 
-        .game-section {
+        /* STICKY HEADER - VIS ALLTID */
+        .header-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 100;
             background: white;
-            border-radius: 15px;
-            padding: 30px 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 15px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-sticky h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
             text-align: center;
         }
 
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 28px;
-        }
-
-        .money-display {
-            font-size: 28px;
+        .money-display-sticky {
+            font-size: 32px;
             color: #667eea;
             font-weight: bold;
-            margin-bottom: 20px;
+            text-align: center;
             background: #f0f0f0;
             padding: 15px;
             border-radius: 10px;
+            margin-bottom: 10px;
         }
 
-        .money-display small {
-            display: block;
-            font-size: 12px;
-            color: #666;
-            margin-top: 8px;
-        }
-
-        .cookie-btn {
-            width: 140px;
-            height: 140px;
-            border: none;
-            border-radius: 50%;
-            background: linear-gradient(145deg, #ffb347, #ff8c00);
-            font-size: 70px;
-            cursor: pointer;
-            transition: transform 0.1s, box-shadow 0.1s;
-            box-shadow: 0 8px 15px rgba(255, 140, 0, 0.4);
-            touch-action: manipulation;
-            margin: 0 auto 20px;
-            display: block;
-        }
-
-        .cookie-btn:active {
-            transform: scale(0.92);
-            box-shadow: 0 4px 8px rgba(255, 140, 0, 0.4);
-        }
-
-        .stats-grid {
+        .stats-sticky {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
-            margin-bottom: 20px;
         }
 
-        .stat-box {
+        .stat-box-sticky {
             background: #f0f0f0;
-            padding: 12px;
+            padding: 10px;
             border-radius: 8px;
             text-align: center;
         }
 
-        .stat-label {
-            font-size: 11px;
+        .stat-label-sticky {
+            font-size: 10px;
             color: #999;
             text-transform: uppercase;
         }
 
-        .stat-value {
-            font-size: 18px;
+        .stat-value-sticky {
+            font-size: 16px;
             font-weight: bold;
             color: #667eea;
         }
 
-        .income-info {
-            margin-top: 15px;
-            font-size: 13px;
-            color: #666;
-            line-height: 1.6;
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
         }
 
-        .income-info strong {
-            color: #667eea;
-            font-size: 16px;
+        .cookie-btn {
+            width: 160px;
+            height: 160px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #ffb347, #ff8c00);
+            font-size: 90px;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+            box-shadow: 0 8px 20px rgba(255, 140, 0, 0.5);
+            touch-action: manipulation;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .cookie-btn:active {
+            transform: scale(0.90);
+            box-shadow: 0 4px 10px rgba(255, 140, 0, 0.3);
+        }
+
+        .cookie-info {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            font-size: 14px;
         }
 
         .shop-section {
@@ -135,8 +127,15 @@
             border-radius: 15px;
             padding: 30px 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            max-height: 70vh;
-            overflow-y: auto;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 22px;
+            text-align: center;
         }
 
         .tab-buttons {
@@ -170,6 +169,8 @@
 
         .tab-content {
             display: none;
+            max-height: 400px;
+            overflow-y: auto;
         }
 
         .tab-content.active {
@@ -273,7 +274,9 @@
             position: fixed;
             pointer-events: none;
             font-weight: bold;
-            color: #667eea;
+            color: #fff;
+            text-shadow: 0 0 5px #667eea;
+            font-size: 24px;
             animation: float-up 1s ease-out forwards;
             z-index: 1000;
         }
@@ -285,65 +288,67 @@
             }
             100% {
                 opacity: 0;
-                transform: translateY(-60px);
+                transform: translateY(-80px);
             }
         }
 
-        .shop-section::-webkit-scrollbar {
+        .tab-content::-webkit-scrollbar {
             width: 6px;
         }
 
-        .shop-section::-webkit-scrollbar-track {
+        .tab-content::-webkit-scrollbar-track {
             background: #f1f1f1;
             border-radius: 10px;
         }
 
-        .shop-section::-webkit-scrollbar-thumb {
+        .tab-content::-webkit-scrollbar-thumb {
             background: #667eea;
             border-radius: 10px;
         }
 
-        .shop-section::-webkit-scrollbar-thumb:hover {
+        .tab-content::-webkit-scrollbar-thumb:hover {
             background: #764ba2;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Spill -->
-        <div class="game-section">
-            <h1>🍪 Kjeks Klikkespill - HARDCORE</h1>
-            <div class="money-display">
-                <div id="money">0</div>
-                <small>Penger</small>
+    <!-- HEADER SOM ALLTID ER SYNLIG -->
+    <div class="header-sticky">
+        <h1>🍪 Kjeks Klikkespill</h1>
+        <div class="money-display-sticky">
+            <div id="money">0</div>
+        </div>
+        <div class="stats-sticky">
+            <div class="stat-box-sticky">
+                <div class="stat-label-sticky">Per klikk</div>
+                <div class="stat-value-sticky" id="perClick">1</div>
             </div>
-            <button class="cookie-btn" id="cookieBtn">🍪</button>
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <div class="stat-label">Per klikk</div>
-                    <div class="stat-value" id="perClick">1</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-label">Per sekund</div>
-                    <div class="stat-value" id="perSecond">0</div>
-                </div>
-            </div>
-            <div class="income-info">
-                <div>Total kjøpt: <strong id="totalClicks">0</strong></div>
-                <div>Oppgraderinger: <strong id="totalUpgrades">0</strong></div>
+            <div class="stat-box-sticky">
+                <div class="stat-label-sticky">Per sekund</div>
+                <div class="stat-value-sticky" id="perSecond">0</div>
             </div>
         </div>
+    </div>
 
-        <!-- Butikk -->
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <button class="cookie-btn" id="cookieBtn">🍪</button>
+        
+        <div class="cookie-info">
+            <div>Total kjøpt: <strong id="totalClicks">0</strong></div>
+            <div>Oppgraderinger: <strong id="totalUpgrades">0</strong></div>
+        </div>
+
+        <!-- BUTIKK -->
         <div class="shop-section">
-            <h1>🛍️ Butikk</h1>
+            <h2>🛍️ Butikk</h2>
             
             <div class="tab-buttons">
-                <button class="tab-btn active" data-tab="upgrades">⚡ Kraft</button>
-                <button class="tab-btn" data-tab="workers">🏭 Arbeidere</button>
-                <button class="tab-btn" data-tab="buildings">🏢 Bygninger</button>
-                <button class="tab-btn" data-tab="special">✨ Spesial</button>
-                <button class="tab-btn" data-tab="mega">🚀 Mega</button>
+                <button class="tab-btn active" data-tab="upgrades">⚡</button>
+                <button class="tab-btn" data-tab="workers">🏭</button>
+                <button class="tab-btn" data-tab="buildings">🏢</button>
+                <button class="tab-btn" data-tab="special">✨</button>
+                <button class="tab-btn" data-tab="mega">🚀</button>
             </div>
 
             <div id="upgrades" class="tab-content active"></div>
@@ -433,7 +438,7 @@
             clickCookie(e) {
                 this.money += this.perClick;
                 this.totalClicks += this.perClick;
-                this.createFloatingText(e, '+' + this.formatNumber(this.perClick) + ' kr');
+                this.createFloatingText(e, '+' + this.formatNumber(this.perClick));
                 this.updateDisplay();
             },
 
@@ -475,7 +480,7 @@
                                     <div class="item-name">${item.icon} ${item.name}</div>
                                     <div class="item-description">${item.description}</div>
                                 </div>
-                                <div class="item-price">${this.formatNumber(item.price)} kr</div>
+                                <div class="item-price">${this.formatNumber(item.price)}</div>
                             </div>
                             ${countHtml}
                             <button class="buy-btn" onclick="gameState.buyItem('${item.id}', ${item.price}, ${effect}, ${income})" ${this.money < item.price ? 'disabled' : ''}>
@@ -497,7 +502,7 @@
                                 <div class="item-name">${item.icon} ${item.name}</div>
                                 <div class="item-description">${item.description}</div>
                             </div>
-                            <div class="item-price">${this.formatNumber(item.price)} kr</div>
+                            <div class="item-price">${this.formatNumber(item.price)}</div>
                         </div>
                         <button class="buy-btn" onclick="gameState.buyItem('${item.id}', ${item.price}, ${item.effect}, ${item.income})" ${this.money < item.price ? 'disabled' : ''}>
                             Kjøp
@@ -532,7 +537,7 @@
             }
         };
 
-        // Event listeners
+        // EVENT LISTENERS
         document.getElementById('cookieBtn').addEventListener('click', (e) => {
             gameState.clickCookie(e);
         });
@@ -547,7 +552,7 @@
             gameState.resetGame();
         });
 
-        // Forhindrer zoom ved dobbelklikk
+        // Forhindrer zoom
         document.addEventListener('touchend', (e) => {
             if (e.target.closest('.cookie-btn')) {
                 e.preventDefault();
@@ -560,7 +565,7 @@
             gameState.updateDisplay();
         }, 1000);
 
-        // Initial render
+        // Start
         gameState.updateDisplay();
     </script>
 </body>
