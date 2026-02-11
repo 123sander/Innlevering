@@ -22,7 +22,6 @@
             -webkit-touch-callout: none;
             font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
             overflow-x: hidden;
         }
 
@@ -32,57 +31,54 @@
             padding: 0;
         }
 
-        /* STICKY HEADER - VIS ALLTID */
-        .header-sticky {
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        /* HEADER MED PENGER */
+        .header-section {
             background: white;
-            padding: 15px 20px;
+            padding: 25px 20px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .header-sticky h1 {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 10px;
             text-align: center;
         }
 
-        .money-display-sticky {
-            font-size: 32px;
+        .header-section h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .money-display-large {
+            font-size: 48px;
             color: #667eea;
             font-weight: bold;
-            text-align: center;
-            background: #f0f0f0;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
+            padding: 20px;
+            border-radius: 12px;
         }
 
-        .stats-sticky {
+        .stats-large {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 12px;
         }
 
-        .stat-box-sticky {
-            background: #f0f0f0;
-            padding: 10px;
+        .stat-box-large {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
             border-radius: 8px;
             text-align: center;
         }
 
-        .stat-label-sticky {
-            font-size: 10px;
-            color: #999;
+        .stat-label-large {
+            font-size: 12px;
             text-transform: uppercase;
+            opacity: 0.9;
+            margin-bottom: 5px;
         }
 
-        .stat-value-sticky {
-            font-size: 16px;
+        .stat-value-large {
+            font-size: 22px;
             font-weight: bold;
-            color: #667eea;
         }
 
         /* MAIN CONTENT */
@@ -91,35 +87,44 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 30px 20px 20px;
             overflow-y: auto;
         }
 
         .cookie-btn {
-            width: 160px;
-            height: 160px;
+            width: 200px;
+            height: 200px;
             border: none;
             border-radius: 50%;
             background: linear-gradient(145deg, #ffb347, #ff8c00);
-            font-size: 90px;
+            font-size: 120px;
             cursor: pointer;
             transition: transform 0.1s, box-shadow 0.1s;
-            box-shadow: 0 8px 20px rgba(255, 140, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(255, 140, 0, 0.6);
             touch-action: manipulation;
-            margin: 20px auto;
+            margin-bottom: 30px;
             display: block;
         }
 
         .cookie-btn:active {
-            transform: scale(0.90);
-            box-shadow: 0 4px 10px rgba(255, 140, 0, 0.3);
+            transform: scale(0.88);
+            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4);
+        }
+
+        .cookie-btn:hover {
+            transform: scale(1.05);
         }
 
         .cookie-info {
             text-align: center;
             color: white;
-            margin-bottom: 30px;
-            font-size: 14px;
+            margin-bottom: 40px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .info-item {
+            margin: 8px 0;
         }
 
         .shop-section {
@@ -129,6 +134,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             width: 100%;
             max-width: 600px;
+            margin-bottom: 30px;
         }
 
         h2 {
@@ -146,7 +152,7 @@
         }
 
         .tab-btn {
-            padding: 10px 5px;
+            padding: 12px 5px;
             border: 2px solid #667eea;
             background: white;
             color: #667eea;
@@ -154,7 +160,7 @@
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s;
-            font-size: 12px;
+            font-size: 14px;
             touch-action: manipulation;
         }
 
@@ -169,7 +175,7 @@
 
         .tab-content {
             display: none;
-            max-height: 400px;
+            max-height: 350px;
             overflow-y: auto;
         }
 
@@ -229,7 +235,7 @@
 
         .buy-btn {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             border: none;
             border-radius: 6px;
             background: #667eea;
@@ -253,7 +259,7 @@
 
         .reset-btn {
             margin-top: 15px;
-            padding: 10px;
+            padding: 12px;
             background: #ff6b6b;
             color: white;
             border: none;
@@ -263,6 +269,7 @@
             transition: background 0.3s;
             width: 100%;
             touch-action: manipulation;
+            font-size: 14px;
         }
 
         .reset-btn:active {
@@ -276,7 +283,7 @@
             font-weight: bold;
             color: #fff;
             text-shadow: 0 0 5px #667eea;
-            font-size: 24px;
+            font-size: 32px;
             animation: float-up 1s ease-out forwards;
             z-index: 1000;
         }
@@ -288,7 +295,7 @@
             }
             100% {
                 opacity: 0;
-                transform: translateY(-80px);
+                transform: translateY(-100px);
             }
         }
 
@@ -309,34 +316,45 @@
         .tab-content::-webkit-scrollbar-thumb:hover {
             background: #764ba2;
         }
+
+        .main-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .main-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .main-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
-    <!-- HEADER SOM ALLTID ER SYNLIG -->
-    <div class="header-sticky">
+    <!-- HEADER MED STORT PENGEOVERSIKT -->
+    <div class="header-section">
         <h1>🍪 Kjeks Klikkespill</h1>
-        <div class="money-display-sticky">
-            <div id="money">0</div>
-        </div>
-        <div class="stats-sticky">
-            <div class="stat-box-sticky">
-                <div class="stat-label-sticky">Per klikk</div>
-                <div class="stat-value-sticky" id="perClick">1</div>
+        <div class="money-display-large" id="moneyLarge">0</div>
+        <div class="stats-large">
+            <div class="stat-box-large">
+                <div class="stat-label-large">Per klikk</div>
+                <div class="stat-value-large" id="perClickLarge">1</div>
             </div>
-            <div class="stat-box-sticky">
-                <div class="stat-label-sticky">Per sekund</div>
-                <div class="stat-value-sticky" id="perSecond">0</div>
+            <div class="stat-box-large">
+                <div class="stat-label-large">Per sekund</div>
+                <div class="stat-value-large" id="perSecondLarge">0</div>
             </div>
         </div>
     </div>
 
-    <!-- MAIN CONTENT -->
+    <!-- MAIN CONTENT - SCROLLBAR -->
     <div class="main-content">
         <button class="cookie-btn" id="cookieBtn">🍪</button>
         
         <div class="cookie-info">
-            <div>Total kjøpt: <strong id="totalClicks">0</strong></div>
-            <div>Oppgraderinger: <strong id="totalUpgrades">0</strong></div>
+            <div class="info-item">Total kjøpt: <span id="totalClicks">0</span></div>
+            <div class="info-item">Oppgraderinger: <span id="totalUpgrades">0</span></div>
         </div>
 
         <!-- BUTIKK -->
@@ -427,9 +445,9 @@
             },
 
             updateDisplay() {
-                document.getElementById('money').textContent = this.formatNumber(this.money);
-                document.getElementById('perClick').textContent = this.formatNumber(this.perClick);
-                document.getElementById('perSecond').textContent = this.formatNumber(this.perSecond);
+                document.getElementById('moneyLarge').textContent = this.formatNumber(this.money);
+                document.getElementById('perClickLarge').textContent = this.formatNumber(this.perClick);
+                document.getElementById('perSecondLarge').textContent = this.formatNumber(this.perSecond);
                 document.getElementById('totalClicks').textContent = this.formatNumber(this.totalClicks);
                 document.getElementById('totalUpgrades').textContent = this.formatNumber(this.totalUpgrades);
                 this.renderShop();
@@ -446,8 +464,8 @@
                 const floatingText = document.createElement('div');
                 floatingText.className = 'floating-text';
                 floatingText.textContent = text;
-                floatingText.style.left = e.clientX + 'px';
-                floatingText.style.top = e.clientY + 'px';
+                floatingText.style.left = (e.clientX || e.touches[0].clientX) + 'px';
+                floatingText.style.top = (e.clientY || e.touches[0].clientY) + 'px';
                 document.body.appendChild(floatingText);
                 setTimeout(() => floatingText.remove(), 1000);
             },
@@ -537,30 +555,40 @@
             }
         };
 
-        // EVENT LISTENERS
-        document.getElementById('cookieBtn').addEventListener('click', (e) => {
+        // EVENT LISTENERS - SØRG FOR AT DET VIRKER
+        const cookieBtn = document.getElementById('cookieBtn');
+        
+        // Mouse click
+        cookieBtn.addEventListener('click', function(e) {
             gameState.clickCookie(e);
         });
 
+        // Touch support
+        cookieBtn.addEventListener('touchstart', function(e) {
+            gameState.clickCookie(e);
+        });
+
+        // Tab buttons
         document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                gameState.switchTab(btn.dataset.tab);
+            btn.addEventListener('click', function() {
+                gameState.switchTab(this.dataset.tab);
             });
         });
 
-        document.getElementById('resetBtn').addEventListener('click', () => {
+        // Reset button
+        document.getElementById('resetBtn').addEventListener('click', function() {
             gameState.resetGame();
         });
 
-        // Forhindrer zoom
-        document.addEventListener('touchend', (e) => {
+        // Forhindrer zoom ved dobbelklikk
+        document.addEventListener('touchend', function(e) {
             if (e.target.closest('.cookie-btn')) {
                 e.preventDefault();
             }
         }, { passive: false });
 
         // Auto-income
-        setInterval(() => {
+        setInterval(function() {
             gameState.money += gameState.perSecond;
             gameState.updateDisplay();
         }, 1000);
