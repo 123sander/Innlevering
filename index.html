@@ -2,7 +2,7 @@
 <html lang="no">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1">
     <title>Kjeks Klikkespill - Utvidet</title>
     <style>
         * {
@@ -16,14 +16,17 @@
         }
 
         html, body {
+            width: 100%;
+            height: 100%;
             touch-action: manipulation;
             -webkit-touch-callout: none;
-        }
-
-        body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -31,269 +34,62 @@
         }
 
         .container {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 30px;
-            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
             width: 100%;
+            max-width: 600px;
+            gap: 20px;
         }
 
         .game-section {
             background: white;
             border-radius: 15px;
-            padding: 40px;
+            padding: 30px 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             text-align: center;
         }
 
-        .shop-section {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            overflow-y: auto;
-            max-height: 800px;
-        }
-
         h1 {
             color: #333;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             font-size: 28px;
         }
 
         .money-display {
-            font-size: 32px;
+            font-size: 28px;
             color: #667eea;
             font-weight: bold;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             background: #f0f0f0;
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
         }
 
         .money-display small {
             display: block;
-            font-size: 14px;
+            font-size: 12px;
             color: #666;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .cookie-btn {
-            width: 150px;
-            height: 150px;
+            width: 140px;
+            height: 140px;
             border: none;
             border-radius: 50%;
             background: linear-gradient(145deg, #ffb347, #ff8c00);
-            font-size: 80px;
+            font-size: 70px;
             cursor: pointer;
             transition: transform 0.1s, box-shadow 0.1s;
             box-shadow: 0 8px 15px rgba(255, 140, 0, 0.4);
             touch-action: manipulation;
-        }
-
-        .cookie-btn:hover {
-            transform: scale(1.05);
-        }
-
-        .cookie-btn:active {
-            transform: scale(0.95);
-            box-shadow: 0 4px 8px rgba(255, 140, 0, 0.4);
-        }
-
-        .income-info {
-            margin-top: 30px;
-            font-size: 14px;
-            color: #666;
-        }
-
-        .income-info strong {
-            color: #667eea;
-            font-size: 18px;
-        }
-
-        .shop-item {
-            background: #f9f9f9;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-            text-align: left;
-            transition: all 0.3s;
-        }
-
-        .shop-item:hover {
-            border-color: #667eea;
-            background: #f5f5ff;
-        }
-
-        .shop-item.locked {
-            opacity: 0.6;
-        }
-
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .item-name {
-            font-weight: bold;
-            color: #333;
-            font-size: 16px;
-        }
-
-        .item-price {
-            background: #667eea;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .item-description {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .item-count {
-            font-size: 13px;
-            color: #999;
-            margin-bottom: 8px;
-        }
-
-        .buy-btn {
-            width: 100%;
-            padding: 8px;
-            border: none;
-            border-radius: 6px;
-            background: #667eea;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-            touch-action: manipulation;
-        }
-
-        .buy-btn:hover:not(:disabled) {
-            background: #764ba2;
-        }
-
-        .buy-btn:active:not(:disabled) {
-            transform: scale(0.98);
-        }
-
-        .buy-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-
-        .reset-btn {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.3s;
-            width: 100%;
-            touch-action: manipulation;
-        }
-
-        .reset-btn:hover {
-            background: #ee5a52;
-        }
-
-        .floating-text {
-            position: fixed;
-            pointer-events: none;
-            font-weight: bold;
-            color: #667eea;
-            animation: float-up 1s ease-out forwards;
-            z-index: 1000;
-        }
-
-        @keyframes float-up {
-            0% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-60px);
-            }
-        }
-
-        @media (max-width: 1024px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-
-            .cookie-btn {
-                width: 120px;
-                height: 120px;
-                font-size: 60px;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-
-            .shop-section {
-                max-height: 600px;
-            }
-        }
-
-        .tab-buttons {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .tab-btn {
-            padding: 10px 5px;
-            border: 2px solid #667eea;
-            background: white;
-            color: #667eea;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-            font-size: 13px;
-            touch-action: manipulation;
-        }
-
-        .tab-btn.active {
-            background: #667eea;
-            color: white;
-        }
-
-        .tab-btn:active {
-            transform: scale(0.98);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
+            margin: 0 auto 20px;
             display: block;
         }
 
-        .category-title {
-            font-size: 14px;
-            font-weight: bold;
-            color: #667eea;
-            text-transform: uppercase;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 8px;
+        .cookie-btn:active {
+            transform: scale(0.92);
+            box-shadow: 0 4px 8px rgba(255, 140, 0, 0.4);
         }
 
         .stats-grid {
@@ -321,13 +117,202 @@
             font-weight: bold;
             color: #667eea;
         }
+
+        .income-info {
+            margin-top: 15px;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .income-info strong {
+            color: #667eea;
+            font-size: 16px;
+        }
+
+        .shop-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .tab-buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            padding: 10px 5px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 12px;
+            touch-action: manipulation;
+        }
+
+        .tab-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .tab-btn:active {
+            transform: scale(0.95);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .shop-item {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 12px;
+            text-align: left;
+            transition: all 0.3s;
+        }
+
+        .shop-item:active {
+            border-color: #667eea;
+            background: #f5f5ff;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .item-name {
+            font-weight: bold;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .item-price {
+            background: #667eea;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .item-description {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .item-count {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+
+        .buy-btn {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 6px;
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            touch-action: manipulation;
+            font-size: 14px;
+        }
+
+        .buy-btn:active:not(:disabled) {
+            background: #764ba2;
+            transform: scale(0.97);
+        }
+
+        .buy-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .reset-btn {
+            margin-top: 15px;
+            padding: 10px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+            width: 100%;
+            touch-action: manipulation;
+        }
+
+        .reset-btn:active {
+            background: #ee5a52;
+            transform: scale(0.97);
+        }
+
+        .floating-text {
+            position: fixed;
+            pointer-events: none;
+            font-weight: bold;
+            color: #667eea;
+            animation: float-up 1s ease-out forwards;
+            z-index: 1000;
+        }
+
+        @keyframes float-up {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-60px);
+            }
+        }
+
+        .shop-section::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .shop-section::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .shop-section::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        .shop-section::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Venstre side: Spill -->
+        <!-- Spill -->
         <div class="game-section">
-            <h1>🍪 Kjeks Klikkespill</h1>
+            <h1>🍪 Kjeks Klikkespill - HARDCORE</h1>
             <div class="money-display">
                 <div id="money">0</div>
                 <small>Penger</small>
@@ -344,12 +329,12 @@
                 </div>
             </div>
             <div class="income-info">
-                <div>Total kjeks kjøpt: <strong id="totalClicks">0</strong></div>
-                <div style="margin-top: 10px;">Oppgraderinger kjøpt: <strong id="totalUpgrades">0</strong></div>
+                <div>Total kjøpt: <strong id="totalClicks">0</strong></div>
+                <div>Oppgraderinger: <strong id="totalUpgrades">0</strong></div>
             </div>
         </div>
 
-        <!-- Høyre side: Butikk -->
+        <!-- Butikk -->
         <div class="shop-section">
             <h1>🛍️ Butikk</h1>
             
@@ -367,7 +352,7 @@
             <div id="special" class="tab-content"></div>
             <div id="mega" class="tab-content"></div>
 
-            <button class="reset-btn" onclick="gameState.resetGame()">🔄 Nullstill Spill</button>
+            <button class="reset-btn" onclick="gameState.resetGame()">🔄 Nullstill</button>
         </div>
     </div>
 
@@ -381,45 +366,54 @@
             bought: {},
 
             upgrades: [
-                { id: 'upgrade1', name: 'Sterkere klikk', description: '+1 per klikk', price: 10, effect: 1, icon: '⚡' },
-                { id: 'upgrade2', name: 'Dobbelt klikk', description: '+2 per klikk', price: 50, effect: 2, icon: '⚡' },
-                { id: 'upgrade3', name: 'Klikk boost', description: '+5 per klikk', price: 200, effect: 5, icon: '🔥' },
-                { id: 'upgrade4', name: 'Mega boost', description: '+15 per klikk', price: 1000, effect: 15, icon: '💥' },
-                { id: 'upgrade5', name: 'Ekstrem kraft', description: '+50 per klikk', price: 5000, effect: 50, icon: '⭐' },
-                { id: 'upgrade6', name: 'Ultrakraft', description: '+150 per klikk', price: 25000, effect: 150, icon: '🌟' },
+                { id: 'upgrade1', name: 'Sterkere klikk', description: '+5 per klikk', price: 10, effect: 5, icon: '⚡' },
+                { id: 'upgrade2', name: 'Dobbelt klikk', description: '+15 per klikk', price: 250, effect: 15, icon: '⚡' },
+                { id: 'upgrade3', name: 'Klikk boost', description: '+50 per klikk', price: 1500, effect: 50, icon: '🔥' },
+                { id: 'upgrade4', name: 'Mega boost', description: '+150 per klikk', price: 10000, effect: 150, icon: '💥' },
+                { id: 'upgrade5', name: 'Ekstrem kraft', description: '+500 per klikk', price: 75000, effect: 500, icon: '⭐' },
+                { id: 'upgrade6', name: 'Ultrakraft', description: '+1500 per klikk', price: 500000, effect: 1500, icon: '🌟' },
+                { id: 'upgrade7', name: 'Galaktisk kraft', description: '+5000 per klikk', price: 3000000, effect: 5000, icon: '🌠' },
+                { id: 'upgrade8', name: 'Univers kraft', description: '+20000 per klikk', price: 20000000, effect: 20000, icon: '🔮' },
             ],
 
             workers: [
-                { id: 'worker1', name: 'Bakeri', description: '1 kr per sekund', price: 15, income: 1, icon: '🏭' },
-                { id: 'worker2', name: 'Stor bakeri', description: '10 kr per sekund', price: 100, income: 10, icon: '🏢' },
-                { id: 'worker3', name: 'Mega fabrikk', description: '50 kr per sekund', price: 500, income: 50, icon: '🌆' },
-                { id: 'worker4', name: 'Kjempe fabrikk', description: '250 kr per sekund', price: 3000, income: 250, icon: '🏗️' },
-                { id: 'worker5', name: 'Galaktisk fabrikk', description: '1000 kr per sekund', price: 15000, income: 1000, icon: '🛸' },
+                { id: 'worker1', name: 'Bakeri', description: '5 kr/s', price: 100, income: 5, icon: '🏭' },
+                { id: 'worker2', name: 'Stor bakeri', description: '50 kr/s', price: 800, income: 50, icon: '🏢' },
+                { id: 'worker3', name: 'Mega fabrikk', description: '250 kr/s', price: 5000, income: 250, icon: '🌆' },
+                { id: 'worker4', name: 'Kjempe fabrikk', description: '+1000 kr/s', price: 40000, income: 1000, icon: '🏗️' },
+                { id: 'worker5', name: 'Galaktisk fabrikk', description: '+5000 kr/s', price: 300000, income: 5000, icon: '🛸' },
+                { id: 'worker6', name: 'Multivers fabrikk', description: '+25000 kr/s', price: 2000000, income: 25000, icon: '🌀' },
+                { id: 'worker7', name: 'Infinity fabrikk', description: '+100000 kr/s', price: 15000000, income: 100000, icon: '∞' },
             ],
 
             buildings: [
-                { id: 'building1', name: 'Kjeksfabrikk', description: '100 kr per sekund', price: 2000, income: 100, icon: '🏭' },
-                { id: 'building2', name: 'Kjeks-forretning', description: '500 kr per sekund', price: 10000, income: 500, icon: '🏪' },
-                { id: 'building3', name: 'Kjeks-konsern', description: '2500 kr per sekund', price: 50000, income: 2500, icon: '🏢' },
-                { id: 'building4', name: 'Kjeks-imperium', description: '10000 kr per sekund', price: 250000, income: 10000, icon: '👑' },
-                { id: 'building5', name: 'Kjeks-univers', description: '50000 kr per sekund', price: 1000000, income: 50000, icon: '🌌' },
+                { id: 'building1', name: 'Kjeksfabrikk', description: '50 kr/s', price: 50000, income: 50, icon: '🏭' },
+                { id: 'building2', name: 'Kjeks-forretning', description: '500 kr/s', price: 400000, income: 500, icon: '🏪' },
+                { id: 'building3', name: 'Kjeks-konsern', description: '+3000 kr/s', price: 3000000, income: 3000, icon: '🏢' },
+                { id: 'building4', name: 'Kjeks-imperium', description: '+20000 kr/s', price: 20000000, income: 20000, icon: '👑' },
+                { id: 'building5', name: 'Kjeks-univers', description: '+100000 kr/s', price: 150000000, income: 100000, icon: '🌌' },
+                { id: 'building6', name: 'Kjeks-multiversum', description: '+500000 kr/s', price: 1000000000, income: 500000, icon: '🌠' },
             ],
 
             special: [
-                { id: 'special1', name: 'Gullkjeks', description: '+10 per klikk', price: 3000, effect: 10, icon: '🟡' },
-                { id: 'special2', name: 'Diamantkjeks', description: '+50 per klikk', price: 15000, effect: 50, icon: '💎' },
-                { id: 'special3', name: 'Magisk kjeks', description: '+200 per klikk', price: 75000, effect: 200, icon: '✨' },
-                { id: 'special4', name: 'Quantum kjeks', description: '+1000 per klikk', price: 400000, effect: 1000, icon: '⚛️' },
+                { id: 'special1', name: 'Gullkjeks', description: '+1000 per klikk', price: 100000, effect: 1000, icon: '🟡' },
+                { id: 'special2', name: 'Diamantkjeks', description: '+5000 per klikk', price: 750000, effect: 5000, icon: '💎' },
+                { id: 'special3', name: 'Magisk kjeks', description: '+30000 per klikk', price: 5000000, effect: 30000, icon: '✨' },
+                { id: 'special4', name: 'Quantum kjeks', description: '+200000 per klikk', price: 50000000, effect: 200000, icon: '⚛️' },
+                { id: 'special5', name: 'Cosmic kjeks', description: '+1500000 per klikk', price: 500000000, effect: 1500000, icon: '🌟' },
             ],
 
             mega: [
-                { id: 'mega1', name: 'Kjeks Singularitet', description: '+5000 per klikk', price: 1000000, effect: 5000, income: 10000, icon: '🌑' },
-                { id: 'mega2', name: 'Kjeks Big Bang', description: '+50000 per klikk + 100k/s', price: 10000000, effect: 50000, income: 100000, icon: '💫' },
-                { id: 'mega3', name: 'Kjeks Multivers', description: '+500k per klikk + 1M/s', price: 100000000, effect: 500000, income: 1000000, icon: '🌐' },
+                { id: 'mega1', name: 'Kjeks Singularitet', description: '+500000 per klikk + 100k/s', price: 500000000, effect: 500000, income: 100000, icon: '🌑' },
+                { id: 'mega2', name: 'Kjeks Big Bang', description: '+5000000 + 1M/s', price: 5000000000, effect: 5000000, income: 1000000, icon: '💫' },
+                { id: 'mega3', name: 'Kjeks Multivers', description: '+50000000 + 10M/s', price: 50000000000, effect: 50000000, income: 10000000, icon: '🌐' },
+                { id: 'mega4', name: 'Kjeks Eternity', description: '+500000000 + 100M/s', price: 500000000000, effect: 500000000, income: 100000000, icon: '♾️' },
             ],
 
             formatNumber(num) {
-                if (num >= 1000000) {
+                if (num >= 1000000000) {
+                    return (num / 1000000000).toFixed(1) + 'B';
+                } else if (num >= 1000000) {
                     return (num / 1000000).toFixed(1) + 'M';
                 } else if (num >= 1000) {
                     return (num / 1000).toFixed(1) + 'K';
@@ -557,7 +551,7 @@
             },
 
             resetGame() {
-                if (confirm('Er du sikker på at du vil nullstille spillet?\n\nAlt progresjon vil bli tapt!')) {
+                if (confirm('Er du sikker?')) {
                     this.money = 0;
                     this.perClick = 1;
                     this.perSecond = 0;
@@ -569,18 +563,24 @@
             }
         };
 
-        // Auto-income hvert sekund
+        // Auto-income
         setInterval(() => {
             gameState.money += gameState.perSecond;
             gameState.updateDisplay();
         }, 1000);
 
-        // Event listeners
+        // Event listener
         document.getElementById('cookieBtn').addEventListener('click', (e) => {
             gameState.clickCookie(e);
         });
 
-        // Initial render
+        // Forhindrer zoom ved dobbelklikk
+        document.addEventListener('touchend', (e) => {
+            if (e.target.closest('.cookie-btn')) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
         gameState.updateDisplay();
     </script>
 </body>
